@@ -1,0 +1,1453 @@
+{
+  "model_version": "10.4",
+  "groups": {
+    "1": "Projekt och skötselmetod",
+    "2": "Trädslag och bördighet",
+    "3": "Referensscenario",
+    "4": "Markkol, DOM och GIS",
+    "5": "Skötselparametrar",
+    "6": "Träprodukter och substitution",
+    "7": "Inbyggt stomvirke"
+  },
+  "fields": [
+    {
+      "key": "projectName",
+      "label": "Projektnamn",
+      "group": 1,
+      "default": "Nytt skogsscenario",
+      "help": "",
+      "unit": "",
+      "percent": false,
+      "integer": false,
+      "type": "text"
+    },
+    {
+      "key": "areaHa",
+      "label": "Areal",
+      "group": 1,
+      "default": 1,
+      "help": "",
+      "unit": "ha",
+      "percent": false,
+      "integer": false,
+      "type": "number",
+      "min": 0.0001,
+      "step": 0.1
+    },
+    {
+      "key": "analysisYears",
+      "label": "Analysperiod",
+      "group": 1,
+      "default": 200,
+      "help": "",
+      "unit": "år",
+      "percent": false,
+      "integer": true,
+      "type": "number",
+      "min": 1.0,
+      "max": 300.0,
+      "step": 1.0
+    },
+    {
+      "key": "startYear",
+      "label": "Startår",
+      "group": 1,
+      "default": 2026,
+      "help": "",
+      "unit": "",
+      "percent": false,
+      "integer": true,
+      "type": "number",
+      "min": 1900.0,
+      "max": 2200.0,
+      "step": 1.0
+    },
+    {
+      "key": "projectType",
+      "label": "Projekttyp",
+      "group": 1,
+      "default": "new",
+      "help": "",
+      "unit": "",
+      "percent": false,
+      "integer": false,
+      "type": "select",
+      "options": [
+        {
+          "value": "new",
+          "label": "Nybeskogning"
+        },
+        {
+          "value": "existing",
+          "label": "Befintligt bestånd"
+        },
+        {
+          "value": "landscape",
+          "label": "Skogslandskap"
+        }
+      ]
+    },
+    {
+      "key": "region",
+      "label": "Landsdel",
+      "group": 2,
+      "default": "south",
+      "help": "Tillväxtens tidsskala och omloppstiden följer skogsvårdslagens lägsta ålder för föryngringsavverkning för valt ståndortsindex och landsdel.",
+      "unit": "",
+      "percent": false,
+      "integer": false,
+      "type": "select",
+      "options": [
+        {
+          "value": "south",
+          "label": "Södra Sverige (Götaland, Svealand, Gävleborg, Dalarna)"
+        },
+        {
+          "value": "north",
+          "label": "Norra Sverige (Västernorrland, Jämtland, Västerbotten, Norrbotten)"
+        }
+      ]
+    },
+    {
+      "key": "disturbanceLevel",
+      "label": "Stormfällning",
+      "group": 5,
+      "default": "off",
+      "help": "",
+      "unit": "",
+      "percent": false,
+      "integer": false,
+      "type": "select",
+      "options": [
+        {
+          "value": "off",
+          "label": "Av"
+        },
+        {
+          "value": "low",
+          "label": "Låg (högst 0,1 %/år)"
+        },
+        {
+          "value": "medium",
+          "label": "Medel (högst 0,25 %/år)"
+        },
+        {
+          "value": "high",
+          "label": "Hög (högst 0,5 %/år)"
+        }
+      ]
+    },
+    {
+      "key": "salvageShare",
+      "label": "Tillvaratas i brukad skog",
+      "group": 5,
+      "default": 0.7,
+      "help": "",
+      "unit": "%",
+      "percent": true,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "max": 100.0,
+      "step": 5.0
+    },
+    {
+      "key": "domEquilibrium",
+      "label": "Mark i jämvikt för befintlig skog",
+      "group": 4,
+      "default": true,
+      "help": "Död ved, förna och humus startar i jämvikt med historiskt skogsbruk i stället för angivet DOM.",
+      "unit": "",
+      "percent": false,
+      "integer": false,
+      "type": "checkbox"
+    },
+    {
+      "key": "projectForestScenario",
+      "label": "Skötselmetod i projektet",
+      "group": 1,
+      "default": "natural",
+      "help": "",
+      "unit": "",
+      "percent": false,
+      "integer": false,
+      "type": "select",
+      "options": [
+        {
+          "value": "natural",
+          "label": "Fri utveckling utan avverkning"
+        },
+        {
+          "value": "conventional",
+          "label": "Trakthyggesbruk, normal omloppstid"
+        },
+        {
+          "value": "extended",
+          "label": "Trakthyggesbruk, förlängd omloppstid"
+        },
+        {
+          "value": "continuous",
+          "label": "Kontinuitetsskogsbruk (blädning)"
+        },
+        {
+          "value": "intensive",
+          "label": "Intensifierat trakthyggesbruk"
+        },
+        {
+          "value": "mix",
+          "label": "Landskapsmix av flera metoder"
+        }
+      ]
+    },
+    {
+      "key": "projectSpecies",
+      "label": "Trädslag",
+      "group": 2,
+      "default": "spruce",
+      "help": "",
+      "unit": "",
+      "percent": false,
+      "integer": false,
+      "type": "select",
+      "options": [
+        {
+          "value": "pine",
+          "label": "Tall"
+        },
+        {
+          "value": "spruce",
+          "label": "Gran"
+        },
+        {
+          "value": "conifers",
+          "label": "Barrskog (gran/tall)"
+        },
+        {
+          "value": "mixed",
+          "label": "Blandskog (gran/bok)"
+        },
+        {
+          "value": "beech",
+          "label": "Bok"
+        },
+        {
+          "value": "oak",
+          "label": "Ek"
+        }
+      ]
+    },
+    {
+      "key": "projectProductivityMethod",
+      "label": "Indatametod för produktionsförmåga",
+      "group": 2,
+      "default": "h100",
+      "help": "",
+      "unit": "",
+      "percent": false,
+      "integer": false,
+      "type": "select",
+      "options": [
+        {
+          "value": "h100",
+          "label": "Ståndortsindex H100"
+        },
+        {
+          "value": "bonitet",
+          "label": "Bonitet"
+        },
+        {
+          "value": "gisH100",
+          "label": "Automatiskt GIS-estimat H100"
+        }
+      ]
+    },
+    {
+      "key": "projectProductivityValue",
+      "label": "H100-värde",
+      "group": 2,
+      "default": 24,
+      "help": "Exempel: G24 anges som 24.",
+      "unit": "m",
+      "percent": false,
+      "integer": false,
+      "type": "number",
+      "min": 0.1,
+      "max": 50.0,
+      "step": 0.1
+    },
+    {
+      "key": "projectPineSiteClass",
+      "label": "Tallmarkklass",
+      "group": 2,
+      "default": "normal",
+      "help": "",
+      "unit": "",
+      "percent": false,
+      "integer": false,
+      "type": "select",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Normal/god tallmark"
+        },
+        {
+          "value": "weak",
+          "label": "Svag tallmark"
+        }
+      ]
+    },
+    {
+      "key": "projectMixedSpruceShare",
+      "label": "Andel gran i blandskog (resten bok)",
+      "group": 2,
+      "default": 0.5,
+      "help": "",
+      "unit": "%",
+      "percent": true,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "max": 100.0,
+      "step": 5.0
+    },
+    {
+      "key": "projectStartAge",
+      "label": "Beståndsålder",
+      "group": 1,
+      "default": 0,
+      "help": "",
+      "unit": "år",
+      "percent": false,
+      "integer": true,
+      "type": "number",
+      "min": 0.0,
+      "max": 400.0,
+      "step": 1.0
+    },
+    {
+      "key": "initialLiveC",
+      "label": "Levande biomassa år 0",
+      "group": 1,
+      "default": 0,
+      "help": "",
+      "unit": "tC/ha",
+      "percent": false,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "step": 1.0
+    },
+    {
+      "key": "ageShare0to20",
+      "label": "0–20 år",
+      "group": 1,
+      "default": 0.3,
+      "help": "",
+      "unit": "%",
+      "percent": true,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "max": 100.0,
+      "step": 1.0
+    },
+    {
+      "key": "ageShare21to40",
+      "label": "21–40 år",
+      "group": 1,
+      "default": 0.28,
+      "help": "",
+      "unit": "%",
+      "percent": true,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "max": 100.0,
+      "step": 1.0
+    },
+    {
+      "key": "ageShare41to60",
+      "label": "41–60 år",
+      "group": 1,
+      "default": 0.2,
+      "help": "",
+      "unit": "%",
+      "percent": true,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "max": 100.0,
+      "step": 1.0
+    },
+    {
+      "key": "ageShare61to80",
+      "label": "61–80 år",
+      "group": 1,
+      "default": 0.12,
+      "help": "",
+      "unit": "%",
+      "percent": true,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "max": 100.0,
+      "step": 1.0
+    },
+    {
+      "key": "ageShare81to100",
+      "label": "81–100 år",
+      "group": 1,
+      "default": 0.05,
+      "help": "",
+      "unit": "%",
+      "percent": true,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "max": 100.0,
+      "step": 1.0
+    },
+    {
+      "key": "ageShare101to120",
+      "label": "101–120 år",
+      "group": 1,
+      "default": 0.03,
+      "help": "",
+      "unit": "%",
+      "percent": true,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "max": 100.0,
+      "step": 1.0
+    },
+    {
+      "key": "ageShare121to140",
+      "label": "121–140 år",
+      "group": 1,
+      "default": 0.02,
+      "help": "",
+      "unit": "%",
+      "percent": true,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "max": 100.0,
+      "step": 1.0
+    },
+    {
+      "key": "landscapeProtectOldest",
+      "label": "Skydda de äldsta bestånden",
+      "group": 1,
+      "default": true,
+      "help": "I landskapsmixen läggs arealen för fri utveckling på de äldsta åldersklasserna.",
+      "unit": "",
+      "percent": false,
+      "integer": false,
+      "type": "checkbox"
+    },
+    {
+      "key": "landscapeBacklogYears",
+      "label": "Avverkning av överåriga bestånd fördelas över",
+      "group": 1,
+      "default": 20,
+      "help": "",
+      "unit": "år",
+      "percent": false,
+      "integer": true,
+      "type": "number",
+      "min": 0.0,
+      "max": 60.0,
+      "step": 5.0
+    },
+    {
+      "key": "mixNatural",
+      "label": "Fri utveckling / skydd",
+      "group": 1,
+      "default": 0.2,
+      "help": "",
+      "unit": "%",
+      "percent": true,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "max": 100.0,
+      "step": 1.0
+    },
+    {
+      "key": "mixConventional",
+      "label": "Trakthygge, normal",
+      "group": 1,
+      "default": 0.47,
+      "help": "",
+      "unit": "%",
+      "percent": true,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "max": 100.0,
+      "step": 1.0
+    },
+    {
+      "key": "mixExtended",
+      "label": "Trakthygge, förlängd",
+      "group": 1,
+      "default": 0,
+      "help": "",
+      "unit": "%",
+      "percent": true,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "max": 100.0,
+      "step": 1.0
+    },
+    {
+      "key": "mixContinuous",
+      "label": "Kontinuitetsskogsbruk",
+      "group": 1,
+      "default": 0.33,
+      "help": "",
+      "unit": "%",
+      "percent": true,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "max": 100.0,
+      "step": 1.0
+    },
+    {
+      "key": "mixIntensive",
+      "label": "Intensifierat",
+      "group": 1,
+      "default": 0,
+      "help": "",
+      "unit": "%",
+      "percent": true,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "max": 100.0,
+      "step": 1.0
+    },
+    {
+      "key": "referenceScenario",
+      "label": "Vad händer utan projektet?",
+      "group": 3,
+      "default": "continuedLandUse",
+      "help": "",
+      "unit": "",
+      "percent": false,
+      "integer": false,
+      "type": "select",
+      "options": [
+        {
+          "value": "continuedLandUse",
+          "label": "Fortsatt nuvarande markanvändning"
+        },
+        {
+          "value": "conventionalForest",
+          "label": "Skogsbruk med vald skötselmetod"
+        },
+        {
+          "value": "noChange",
+          "label": "Ingen förändring i referensen"
+        }
+      ]
+    },
+    {
+      "key": "referenceForestScenario",
+      "label": "Referensens skötselmetod",
+      "group": 3,
+      "default": "conventional",
+      "help": "",
+      "unit": "",
+      "percent": false,
+      "integer": false,
+      "type": "select",
+      "options": [
+        {
+          "value": "conventional",
+          "label": "Trakthyggesbruk, normal omloppstid"
+        },
+        {
+          "value": "extended",
+          "label": "Trakthyggesbruk, förlängd omloppstid"
+        },
+        {
+          "value": "continuous",
+          "label": "Kontinuitetsskogsbruk (blädning)"
+        },
+        {
+          "value": "intensive",
+          "label": "Intensifierat trakthyggesbruk"
+        },
+        {
+          "value": "natural",
+          "label": "Fri utveckling utan avverkning"
+        }
+      ]
+    },
+    {
+      "key": "referenceSpeciesMode",
+      "label": "Referensens trädslag",
+      "group": 3,
+      "default": "same",
+      "help": "",
+      "unit": "",
+      "percent": false,
+      "integer": false,
+      "type": "select",
+      "options": [
+        {
+          "value": "same",
+          "label": "Samma som projektet"
+        },
+        {
+          "value": "custom",
+          "label": "Ange separat"
+        }
+      ]
+    },
+    {
+      "key": "referenceSpecies",
+      "label": "Trädslag i referensen",
+      "group": 3,
+      "default": "spruce",
+      "help": "",
+      "unit": "",
+      "percent": false,
+      "integer": false,
+      "type": "select",
+      "options": [
+        {
+          "value": "pine",
+          "label": "Tall"
+        },
+        {
+          "value": "spruce",
+          "label": "Gran"
+        },
+        {
+          "value": "conifers",
+          "label": "Barrskog (gran/tall)"
+        },
+        {
+          "value": "mixed",
+          "label": "Blandskog (gran/bok)"
+        },
+        {
+          "value": "beech",
+          "label": "Bok"
+        },
+        {
+          "value": "oak",
+          "label": "Ek"
+        }
+      ]
+    },
+    {
+      "key": "referenceProductivityMode",
+      "label": "Produktionsförmåga i referensen",
+      "group": 3,
+      "default": "same",
+      "help": "",
+      "unit": "",
+      "percent": false,
+      "integer": false,
+      "type": "select",
+      "options": [
+        {
+          "value": "same",
+          "label": "Samma indata som projektet"
+        },
+        {
+          "value": "custom",
+          "label": "Ange separat"
+        }
+      ]
+    },
+    {
+      "key": "referenceProductivityMethod",
+      "label": "Indatametod",
+      "group": 3,
+      "default": "h100",
+      "help": "",
+      "unit": "",
+      "percent": false,
+      "integer": false,
+      "type": "select",
+      "options": [
+        {
+          "value": "h100",
+          "label": "Ståndortsindex H100"
+        },
+        {
+          "value": "bonitet",
+          "label": "Bonitet"
+        },
+        {
+          "value": "gisH100",
+          "label": "Automatiskt GIS-estimat H100"
+        }
+      ]
+    },
+    {
+      "key": "referenceProductivityValue",
+      "label": "H100-värde",
+      "group": 3,
+      "default": 24,
+      "help": "",
+      "unit": "m",
+      "percent": false,
+      "integer": false,
+      "type": "number",
+      "min": 0.1,
+      "max": 50.0,
+      "step": 0.1
+    },
+    {
+      "key": "referencePineSiteClass",
+      "label": "Tallmarkklass i referensen",
+      "group": 3,
+      "default": "normal",
+      "help": "",
+      "unit": "",
+      "percent": false,
+      "integer": false,
+      "type": "select",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Normal/god tallmark"
+        },
+        {
+          "value": "weak",
+          "label": "Svag tallmark"
+        }
+      ]
+    },
+    {
+      "key": "referenceMixedSpruceShare",
+      "label": "Andel gran i referensens blandskog",
+      "group": 3,
+      "default": 0.5,
+      "help": "",
+      "unit": "%",
+      "percent": true,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "max": 100.0,
+      "step": 5.0
+    },
+    {
+      "key": "referenceStartAge",
+      "label": "Beståndsålder i referensen",
+      "group": 3,
+      "default": 0,
+      "help": "",
+      "unit": "år",
+      "percent": false,
+      "integer": true,
+      "type": "number",
+      "min": 0.0,
+      "max": 400.0,
+      "step": 1.0
+    },
+    {
+      "key": "includeSoilDom",
+      "label": "Inkludera SOC och DOM",
+      "group": 4,
+      "default": true,
+      "help": "Mineraljord 0–50 cm samt död ved, förna och humus.",
+      "unit": "",
+      "percent": false,
+      "integer": false,
+      "type": "checkbox"
+    },
+    {
+      "key": "currentLandUse",
+      "label": "Nuvarande markanvändning",
+      "group": 4,
+      "default": "cropland",
+      "help": "",
+      "unit": "",
+      "percent": false,
+      "integer": false,
+      "type": "select",
+      "options": [
+        {
+          "value": "cropland",
+          "label": "Åkermark"
+        },
+        {
+          "value": "grassland",
+          "label": "Gräsmark"
+        },
+        {
+          "value": "sealed",
+          "label": "Hårdgjord mark"
+        },
+        {
+          "value": "otherOpen",
+          "label": "Annan öppen mark"
+        },
+        {
+          "value": "forest",
+          "label": "Skogsmark"
+        },
+        {
+          "value": "unknown",
+          "label": "Okänd"
+        }
+      ]
+    },
+    {
+      "key": "soilType",
+      "label": "Jordtyp",
+      "group": 4,
+      "default": "mineral",
+      "help": "",
+      "unit": "",
+      "percent": false,
+      "integer": false,
+      "type": "select",
+      "options": [
+        {
+          "value": "mineral",
+          "label": "Mineraljord"
+        },
+        {
+          "value": "organic",
+          "label": "Organisk jord / torv"
+        }
+      ]
+    },
+    {
+      "key": "restorationScenario",
+      "label": "Återställning av hårdgjord mark",
+      "group": 4,
+      "default": "notApplicable",
+      "help": "",
+      "unit": "",
+      "percent": false,
+      "integer": false,
+      "type": "select",
+      "options": [
+        {
+          "value": "full",
+          "label": "Fullständig återställning"
+        },
+        {
+          "value": "partial",
+          "label": "Partiell återställning"
+        },
+        {
+          "value": "unspecified",
+          "label": "Ej specificerad"
+        },
+        {
+          "value": "notApplicable",
+          "label": "Ej relevant"
+        }
+      ]
+    },
+    {
+      "key": "initialSoc0to50",
+      "label": "Initialt SOC 0–50 cm",
+      "group": 4,
+      "default": 80,
+      "help": "",
+      "unit": "tC/ha",
+      "percent": false,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "step": 1.0
+    },
+    {
+      "key": "initialDom",
+      "label": "Initialt DOM totalt",
+      "group": 4,
+      "default": 10,
+      "help": "",
+      "unit": "tC/ha",
+      "percent": false,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "step": 1.0
+    },
+    {
+      "key": "referenceSoilMethod",
+      "label": "Referensmetod för SOC och DOM",
+      "group": 4,
+      "default": "internal",
+      "help": "",
+      "unit": "",
+      "percent": false,
+      "integer": false,
+      "type": "select",
+      "options": [
+        {
+          "value": "internal",
+          "label": "Modellens schablonvärden"
+        },
+        {
+          "value": "gisDirect",
+          "label": "Direkta GIS-förändringar"
+        }
+      ]
+    },
+    {
+      "key": "gisRefSocChange",
+      "label": "GIS Change_SOC",
+      "group": 4,
+      "default": 0,
+      "help": "",
+      "unit": "tC/ha,år",
+      "percent": false,
+      "integer": false,
+      "type": "number",
+      "step": 0.01
+    },
+    {
+      "key": "gisRefDomChange",
+      "label": "GIS Change_DOM",
+      "group": 4,
+      "default": 0,
+      "help": "",
+      "unit": "tC/ha,år",
+      "percent": false,
+      "integer": false,
+      "type": "number",
+      "step": 0.01
+    },
+    {
+      "key": "extensionYears",
+      "label": "Förlängning av omloppstid",
+      "group": 5,
+      "default": 30,
+      "help": "",
+      "unit": "år",
+      "percent": false,
+      "integer": true,
+      "type": "number",
+      "min": 0.0,
+      "max": 150.0,
+      "step": 5.0
+    },
+    {
+      "key": "thinningCount",
+      "label": "Antal gallringar",
+      "group": 5,
+      "default": 2,
+      "help": "",
+      "unit": "",
+      "percent": false,
+      "integer": true,
+      "type": "select",
+      "options": [
+        {
+          "value": 0,
+          "label": "Inga"
+        },
+        {
+          "value": 1,
+          "label": "1"
+        },
+        {
+          "value": 2,
+          "label": "2"
+        },
+        {
+          "value": 3,
+          "label": "3"
+        }
+      ]
+    },
+    {
+      "key": "thinningShare",
+      "label": "Uttag per gallring",
+      "group": 5,
+      "default": 0.25,
+      "help": "",
+      "unit": "%",
+      "percent": true,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "max": 60.0,
+      "step": 1.0
+    },
+    {
+      "key": "ccfMethod",
+      "label": "Uttagsregel",
+      "group": 5,
+      "default": "target",
+      "help": "",
+      "unit": "",
+      "percent": false,
+      "integer": false,
+      "type": "select",
+      "options": [
+        {
+          "value": "target",
+          "label": "Målförråd: bläda när förrådet når övre nivån"
+        },
+        {
+          "value": "interval",
+          "label": "Fast intervall och uttagsandel"
+        }
+      ]
+    },
+    {
+      "key": "ccfUpperStock",
+      "label": "Bläda när förrådet når",
+      "group": 5,
+      "default": 250,
+      "help": "",
+      "unit": "m³sk/ha",
+      "percent": false,
+      "integer": false,
+      "type": "number",
+      "min": 20.0,
+      "max": 1000.0,
+      "step": 10.0
+    },
+    {
+      "key": "ccfLowerStock",
+      "label": "Lämna efter blädning",
+      "group": 5,
+      "default": 150,
+      "help": "",
+      "unit": "m³sk/ha",
+      "percent": false,
+      "integer": false,
+      "type": "number",
+      "min": 10.0,
+      "max": 1000.0,
+      "step": 10.0
+    },
+    {
+      "key": "ccfInterval",
+      "label": "Intervall mellan blädningar",
+      "group": 5,
+      "default": 20,
+      "help": "",
+      "unit": "år",
+      "percent": false,
+      "integer": true,
+      "type": "number",
+      "min": 5.0,
+      "max": 60.0,
+      "step": 1.0
+    },
+    {
+      "key": "ccfRemoval",
+      "label": "Uttag per blädning",
+      "group": 5,
+      "default": 0.3,
+      "help": "",
+      "unit": "%",
+      "percent": true,
+      "integer": false,
+      "type": "number",
+      "min": 5.0,
+      "max": 60.0,
+      "step": 1.0
+    },
+    {
+      "key": "ccfGrowthFactor",
+      "label": "Tillväxtfaktor",
+      "group": 5,
+      "default": 1.06,
+      "help": "",
+      "unit": "× ref.",
+      "percent": false,
+      "integer": false,
+      "type": "number",
+      "min": 0.3,
+      "max": 1.5,
+      "step": 0.01
+    },
+    {
+      "key": "ccfFirstCutFraction",
+      "label": "Första blädning vid",
+      "group": 5,
+      "default": 0.6,
+      "help": "",
+      "unit": "% av oml.",
+      "percent": true,
+      "integer": false,
+      "type": "number",
+      "min": 20.0,
+      "max": 150.0,
+      "step": 5.0
+    },
+    {
+      "key": "ccfStructuralAge",
+      "label": "Strukturell ålder",
+      "group": 5,
+      "default": 70,
+      "help": "",
+      "unit": "år",
+      "percent": false,
+      "integer": true,
+      "type": "number",
+      "min": 20.0,
+      "max": 200.0,
+      "step": 5.0
+    },
+    {
+      "key": "breedingGain",
+      "label": "Förädlingsvinst, planterad skog",
+      "group": 5,
+      "default": 0.2,
+      "help": "",
+      "unit": "%",
+      "percent": true,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "max": 100.0,
+      "step": 5.0
+    },
+    {
+      "key": "intensiveGrowthBoost",
+      "label": "Extra tillväxt (gödsling m.m.)",
+      "group": 5,
+      "default": 0.15,
+      "help": "",
+      "unit": "%",
+      "percent": true,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "max": 100.0,
+      "step": 5.0
+    },
+    {
+      "key": "intensiveGrotShare",
+      "label": "GROT-uttag",
+      "group": 5,
+      "default": 0.65,
+      "help": "",
+      "unit": "%",
+      "percent": true,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "max": 100.0,
+      "step": 5.0
+    },
+    {
+      "key": "grotShare",
+      "label": "GROT-uttag vid slutavverkning",
+      "group": 5,
+      "default": 0.3,
+      "help": "",
+      "unit": "%",
+      "percent": true,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "max": 100.0,
+      "step": 5.0
+    },
+    {
+      "key": "retentionShare",
+      "label": "Naturhänsyn som lämnas",
+      "group": 5,
+      "default": 0,
+      "help": "",
+      "unit": "% areal",
+      "percent": true,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "max": 50.0,
+      "step": 1.0
+    },
+    {
+      "key": "clearcutHumusLoss",
+      "label": "Humusförlust vid kalhygge",
+      "group": 5,
+      "default": 0.15,
+      "help": "",
+      "unit": "%",
+      "percent": true,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "max": 60.0,
+      "step": 1.0
+    },
+    {
+      "key": "systemBoundary",
+      "label": "Systemgräns för nettoresultatet",
+      "group": 6,
+      "default": "ecosystem",
+      "help": "Ekosystem + träprodukter motsvarar principerna i den nationella klimatrapporteringen. Substitution redovisas inte där och är mycket osäker.",
+      "unit": "",
+      "percent": false,
+      "integer": false,
+      "type": "select",
+      "options": [
+        {
+          "value": "ecosystem",
+          "label": "Ekosystem (skog och mark)"
+        },
+        {
+          "value": "hwp",
+          "label": "Ekosystem + träprodukter"
+        },
+        {
+          "value": "substitution",
+          "label": "Ekosystem + träprodukter + substitution"
+        }
+      ]
+    },
+    {
+      "key": "substitutionSet",
+      "label": "Substitutionsnivå",
+      "group": 6,
+      "default": "lowDecarb",
+      "help": "",
+      "unit": "",
+      "percent": false,
+      "integer": false,
+      "type": "select",
+      "options": [
+        {
+          "value": "none",
+          "label": "Ingen substitution"
+        },
+        {
+          "value": "lowDecarb",
+          "label": "Låg, avtagande till 2050 (IVL/Hurmekoski)"
+        },
+        {
+          "value": "low",
+          "label": "Låg, dagens nivå konstant"
+        },
+        {
+          "value": "high",
+          "label": "Hög, produktnivå (Leskinen m.fl. 2018)"
+        },
+        {
+          "value": "custom",
+          "label": "Egna faktorer"
+        }
+      ]
+    },
+    {
+      "key": "customDfSawnwood",
+      "label": "Sågade trävaror",
+      "group": 6,
+      "default": 0.9,
+      "help": "",
+      "unit": "tC/tC",
+      "percent": false,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "max": 5.0,
+      "step": 0.05
+    },
+    {
+      "key": "customDfPaper",
+      "label": "Massa och papper",
+      "group": 6,
+      "default": 0.1,
+      "help": "",
+      "unit": "tC/tC",
+      "percent": false,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "max": 5.0,
+      "step": 0.05
+    },
+    {
+      "key": "customDfEnergy",
+      "label": "Energi",
+      "group": 6,
+      "default": 0.5,
+      "help": "",
+      "unit": "tC/tC",
+      "percent": false,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "max": 5.0,
+      "step": 0.05
+    },
+    {
+      "key": "hwpHalfLifeSawnwood",
+      "label": "Sågade trävaror",
+      "group": 6,
+      "default": 35,
+      "help": "",
+      "unit": "år",
+      "percent": false,
+      "integer": false,
+      "type": "number",
+      "min": 1.0,
+      "max": 200.0,
+      "step": 1.0
+    },
+    {
+      "key": "hwpHalfLifePaper",
+      "label": "Massa och papper",
+      "group": 6,
+      "default": 2,
+      "help": "",
+      "unit": "år",
+      "percent": false,
+      "integer": false,
+      "type": "number",
+      "min": 0.5,
+      "max": 50.0,
+      "step": 0.5
+    },
+    {
+      "key": "productSawnFinal",
+      "label": "Slutavverkning: sågat",
+      "group": 6,
+      "default": 0.3,
+      "help": "",
+      "unit": "%",
+      "percent": true,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "max": 100.0,
+      "step": 1.0
+    },
+    {
+      "key": "productPaperFinal",
+      "label": "Slutavverkning: massa",
+      "group": 6,
+      "default": 0.4,
+      "help": "",
+      "unit": "%",
+      "percent": true,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "max": 100.0,
+      "step": 1.0
+    },
+    {
+      "key": "productSawnCcf",
+      "label": "Blädning: sågat",
+      "group": 6,
+      "default": 0.38,
+      "help": "",
+      "unit": "%",
+      "percent": true,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "max": 100.0,
+      "step": 1.0
+    },
+    {
+      "key": "productPaperCcf",
+      "label": "Blädning: massa",
+      "group": 6,
+      "default": 0.32,
+      "help": "",
+      "unit": "%",
+      "percent": true,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "max": 100.0,
+      "step": 1.0
+    },
+    {
+      "key": "productSawnThinning",
+      "label": "Gallring: sågat",
+      "group": 6,
+      "default": 0.1,
+      "help": "",
+      "unit": "%",
+      "percent": true,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "max": 100.0,
+      "step": 1.0
+    },
+    {
+      "key": "productPaperThinning",
+      "label": "Gallring: massa",
+      "group": 6,
+      "default": 0.6,
+      "help": "",
+      "unit": "%",
+      "percent": true,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "max": 100.0,
+      "step": 1.0
+    },
+    {
+      "key": "structuralShareProject",
+      "label": "Andel i projektet",
+      "group": 7,
+      "default": 0,
+      "help": "",
+      "unit": "% av uttag",
+      "percent": true,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "max": 100.0,
+      "step": 1.0
+    },
+    {
+      "key": "structuralShareReference",
+      "label": "Andel i referensen",
+      "group": 7,
+      "default": 0,
+      "help": "",
+      "unit": "% av uttag",
+      "percent": true,
+      "integer": false,
+      "type": "number",
+      "min": 0.0,
+      "max": 100.0,
+      "step": 1.0
+    },
+    {
+      "key": "structuralHalfLife",
+      "label": "Halveringstid i byggnader",
+      "group": 7,
+      "default": 100,
+      "help": "",
+      "unit": "år",
+      "percent": false,
+      "integer": false,
+      "type": "number",
+      "min": 5.0,
+      "max": 1000.0,
+      "step": 5.0
+    },
+    {
+      "key": "includeStructural",
+      "label": "Räkna in stomvirket i nettoresultatet",
+      "group": 7,
+      "default": true,
+      "help": "Av: nettot beräknas som utan stomvirke och lagringen visas bara separat.",
+      "unit": "",
+      "percent": false,
+      "integer": false,
+      "type": "checkbox"
+    }
+  ]
+}

@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="sv"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Publicera Skogskolmodellen 10.4 – GitHub och Streamlit</title>
+<style>
+:root{--green:#173f35;--light:#edf5ef;--ink:#26352f;--line:#d7e2dc}
+*{box-sizing:border-box}body{margin:0;background:#f2f5f3;color:var(--ink);font:17px/1.65 "Segoe UI",Arial,sans-serif}
+main{max-width:1050px;margin:32px auto;padding:48px 58px;background:white;border-top:8px solid var(--green);box-shadow:0 8px 30px #173f350c}
+.badge{display:inline-block;background:var(--light);color:var(--green);padding:5px 12px;border-radius:5px;font-size:13px;font-weight:700;letter-spacing:.04em}
+h1{font-size:37px;line-height:1.18;color:var(--green);margin:22px 0 25px}h2{font-size:25px;color:var(--green);margin:48px 0 14px;padding-top:14px;border-top:1px solid var(--line);scroll-margin-top:25px}
+p{margin:15px 0}li{padding-left:6px;margin:9px 0}a{color:#146c60;text-underline-offset:3px}
+code{background:#eff3f1;padding:2px 5px;border-radius:3px;font:14px/1.5 Consolas,monospace;overflow-wrap:anywhere}
+pre{background:#eff3f1;padding:18px;white-space:pre-wrap}pre code{padding:0}.table-scroll{overflow:auto;margin:22px 0}
+table{border-collapse:collapse;width:100%;font-size:15px}th,td{padding:13px 15px;vertical-align:top;text-align:left;border-bottom:1px solid var(--line)}th{background:var(--green);color:white}td:first-child{width:40%}tr:nth-child(even){background:#f6f9f7}
+nav{padding:20px 25px;background:var(--light);margin:30px 0;border-radius:7px}nav ol{columns:2;margin-bottom:0;padding-left:20px}nav li{break-inside:avoid;font-size:15px;margin:5px 0}
+.footer{font-size:13px;color:#63736b;margin-top:45px;border-top:1px solid var(--line);padding-top:20px}
+@media(max-width:650px){main{margin:0;padding:25px 21px}h1{font-size:29px}h2{font-size:23px}nav ol{columns:1}body{font-size:16px}th,td{padding:10px;font-size:14px}}
+@media print{body{background:white;font-size:11pt}main{margin:0;padding:0;box-shadow:none;border:0;max-width:none}h1{font-size:25pt}h2{font-size:17pt;break-after:avoid}tr{break-inside:avoid}nav{break-inside:avoid}a{color:inherit}code{font-size:9pt}}
+</style></head><body><main><div class="badge">SKOGSKOLMODELLEN 10.4 · PUBLICERINGSGUIDE · 26 OKTOBER 2026</div><h1 id="start">Publicera Skogskolmodellen med GitHub och Streamlit</h1><nav><strong>Innehåll</strong><ol><li><a href="#avsnitt-1">1. Packa upp paketet på datorn</a></li><li><a href="#avsnitt-2">2. Skapa ett nytt repository på GitHub</a></li><li><a href="#avsnitt-3">3. Ladda upp filerna</a></li><li><a href="#avsnitt-4">4. Koppla Streamlit till GitHub</a></li><li><a href="#avsnitt-5">5. Publicera appen</a></li><li><a href="#avsnitt-6">6. Kontrollera modellen efter start</a></li><li><a href="#avsnitt-7">7. Dela webbadressen</a></li><li><a href="#avsnitt-8">8. Om du vill ha privat kod och offentlig app</a></li><li><a href="#avsnitt-9">9. Uppdatera modellen senare</a></li><li><a href="#avsnitt-10">10. Vanliga problem</a></li><li><a href="#avsnitt-11">11. Förvaltning och tekniska detaljer</a></li><li><a href="#avsnitt-12">Källor för publiceringsförfarandet</a></li></ol></nav><p>Guide för Skogskolmodellen <strong>10.4-streamlit.1</strong>, framtagen 26 oktober 2026.</p>
+<p>Du laddar upp modellfilerna till GitHub och låter Streamlit Community Cloud köra appen. När publiceringen är klar får modellen en webbadress som du kan dela med andra. Hela grundförfarandet kan göras i en vanlig webbläsare.</p>
+<h2 id="avsnitt-1">1. Packa upp paketet på datorn</h2>
+<ol start="1">
+<li>Ladda ned <code>Skogskolmodellen_v10_4_GitHub_Streamlit.zip</code>.</li>
+<li>I Windows: högerklicka på ZIP-filen och välj <strong>Extrahera alla</strong>.</li>
+<li>Öppna den uppackade mappen. Fortsätt till den nivå där du ser filen <strong>streamlit_app.py</strong>.</li>
+<li>Kontrollera att samma mapp också innehåller <code>requirements.txt</code>, <code>model_adapter.py</code>, <code>Skogskolmodellen_v10_4.py</code>, <code>input_schema.json</code>, <code>standardscenario.json</code> och <code>webbmodell.html</code>.</li>
+</ol>
+<p>Det är <strong>innehållet i den uppackade mappen</strong> som ska laddas upp till GitHub. Laddar du enbart upp ZIP-filen kan Streamlit inte hitta appens startfil. Paketet är litet och behöver inte delas i mindre ZIP-filer.</p>
+<h2 id="avsnitt-2">2. Skapa ett nytt repository på GitHub</h2>
+<p>Ett repository är GitHubs projektmapp för kod och dess versionshistorik.</p>
+<ol start="1">
+<li>Gå till <a href="https://github.com/" target="_blank" rel="noopener">github.com</a> och logga in.</li>
+<li>Klicka på <strong>+</strong> uppe till höger och välj <strong>New repository</strong>. Du kan också öppna <a href="https://github.com/new" target="_blank" rel="noopener">github.com/new</a>.</li>
+<li>Välj ditt konto under <strong>Owner</strong>.</li>
+<li>Skriv <strong>skogskolmodellen</strong> som <strong>Repository name</strong>. Om det namnet redan används på ditt konto kan du exempelvis skriva <code>skogskolmodellen-streamlit</code>.</li>
+<li>En lämplig beskrivning är: <code>Skogskolmodellen 10.4 – scenarier för skog och klimat</code>.</li>
+<li>Välj <strong>Public</strong> för den enklaste publiceringsvägen. Då blir också modellens källkod offentligt läsbar. Om du vill begränsa insynen i koden väljer du <strong>Private</strong> och följer även avsnitt 8.</li>
+<li>Låt GitHub lämna README, gitignore och licens tomma här. Paketet har redan en README och en gitignore.</li>
+<li>Klicka på <strong>Create repository</strong>.</li>
+</ol>
+<p>Detta följer GitHubs dokumentation om att skapa nya projekt [1].</p>
+<h2 id="avsnitt-3">3. Ladda upp filerna</h2>
+<ol start="1">
+<li>I det nya, tomma projektet: klicka på länken <strong>uploading an existing file</strong>. Om det redan finns filer väljer du <strong>Add file → Upload files</strong>.</li>
+<li>Öppna den uppackade mappen i Utforskaren.</li>
+<li>Markera <strong>filerna och undermapparna inne i mappen</strong> och dra dem till GitHubs uppladdningsruta. Dra inte med den yttre mappen.</li>
+<li>Vänta tills listan med uppladdade filer är färdig.</li>
+<li>Skriv exempelvis <code>Lägg till Skogskolmodellen 10.4 för Streamlit</code> som commit-meddelande. En commit är en sparad version i GitHub.</li>
+<li>Klicka på <strong>Commit changes</strong>, eller motsvarande knapp för att spara.</li>
+</ol>
+<p>Kontrollera sedan projektets startsida. Filerna nedan ska ligga direkt där, utan att du först behöver öppna ytterligare en mapp:</p>
+<div class="table-scroll"><table><thead><tr><th>Ska synas i projektets rot</th><th>Varför den behövs</th></tr></thead><tbody>
+<tr><td><code>streamlit_app.py</code></td><td>Startar appen</td></tr>
+<tr><td><code>requirements.txt</code></td><td>Installerar programbiblioteken</td></tr>
+<tr><td><code>model_adapter.py</code></td><td>Kopplar gränssnittet till modellen</td></tr>
+<tr><td><code>Skogskolmodellen_v10_4.py</code></td><td>Utför modellberäkningarna</td></tr>
+<tr><td><code>input_schema.json</code></td><td>Beskriver indatafälten</td></tr>
+<tr><td><code>standardscenario.json</code></td><td>Ger modellens standardindata</td></tr>
+<tr><td><code>webbmodell.html</code></td><td>Visar den kompletta tidigare webbmodellen</td></tr>
+<tr><td><code>PUBLICERING.md</code></td><td>Ger den inbyggda hjälpsidan</td></tr>
+</tbody></table></div>
+<p>GitHubs dokumentation beskriver uppladdningsförfarandet [2]. Alla filer i detta paket ligger långt under GitHubs gräns på 25 MiB per fil för uppladdning via webbläsare.</p>
+<p>Mapparna <code>tests</code> och <code>.github</code> bör också följa med. De behövs för automatiska kontroller. Appen kan starta även om dessa två mappar saknas. GitHub kan be om särskild behörighet för att lägga till en workflow-fil. Om det händer kan du först publicera appen utan <code>.github</code> och därefter lägga till kontrollflödet genom GitHubs gränssnitt. Ingen sådan behörighet behövs för modellens vanliga filer.</p>
+<h2 id="avsnitt-4">4. Koppla Streamlit till GitHub</h2>
+<ol start="1">
+<li>Öppna <a href="https://share.streamlit.io/" target="_blank" rel="noopener">share.streamlit.io</a>.</li>
+<li>Skapa ett Community Cloud-konto eller logga in på ditt befintliga konto.</li>
+<li>Koppla samma GitHub-konto som äger modellprojektet. Vid en ny koppling visas normalt <strong>Connect GitHub account</strong> och därefter <strong>Authorize streamlit</strong>.</li>
+<li>Kontrollera att rätt GitHub-användare eller organisation är vald i Streamlits arbetsyta.</li>
+</ol>
+<p>För ett projekt under en organisation, exempelvis ett institut, kan den som administrerar organisationen behöva godkänna kopplingen. Den som publicerar appen behöver administratörsbehörighet till GitHub-projektet [3].</p>
+<h2 id="avsnitt-5">5. Publicera appen</h2>
+<ol start="1">
+<li>Klicka på <strong>Create app</strong> i Streamlit.</li>
+<li>Om frågan om en befintlig app visas, välj <strong>Yup, I have an app</strong>.</li>
+<li>Välj projektet, grenen och startfilen enligt tabellen nedan.</li>
+<li>Klicka på <strong>Advanced settings</strong> och välj <strong>Python 3.12</strong>. Lämna fältet <strong>Secrets</strong> tomt. Klicka på <strong>Save</strong>.</li>
+<li>Välj om du vill ange ett eget appnamn under <strong>App URL</strong>.</li>
+<li>Klicka på <strong>Deploy</strong> och låt installationen bli klar [4].</li>
+</ol>
+<div class="table-scroll"><table><thead><tr><th>Fält i Streamlit</th><th>Vad du ska ange</th></tr></thead><tbody>
+<tr><td>Repository</td><td><code>DITT_GITHUBNAMN/skogskolmodellen</code></td></tr>
+<tr><td>Branch</td><td><code>main</code></td></tr>
+<tr><td>Main file path</td><td><code>streamlit_app.py</code></td></tr>
+<tr><td>Python version</td><td><code>3.12</code></td></tr>
+<tr><td>App URL, frivilligt</td><td>exempelvis <code>skogsnytta</code>, om det är ledigt</td></tr>
+<tr><td>Secrets</td><td>Lämnas tomt</td></tr>
+</tbody></table></div>
+<p><strong>DITT_GITHUBNAMN är en platshållare.</strong> Ersätt det med det användarnamn du ser på GitHub. Om du valde ett annat projektnamn använder du det namnet i stället för <code>skogskolmodellen</code>. Välj den gren som faktiskt syns i GitHub om den heter något annat än <code>main</code>.</p>
+<p>Du kan även klistra in länken till <code>streamlit_app.py</code> från GitHub om Streamlit inte hittar projektet i sin lista.</p>
+<p>Om du får använda namnet <code>skogsnytta</code> blir adressen <code>https://skogsnytta.streamlit.app/</code>. Detta är ett <strong>exempel på önskad adress</strong>; namnet har inte reserverats i denna leverans. Streamlit kan annars skapa en annan adress automatiskt.</p>
+<p>Första installationen kan ta några minuter. <code>requirements.txt</code> installerar Streamlit, pandas och Node.js-paketet. Du behöver inte själv lägga till <code>packages.txt</code> eller installera Node.js på din dator för denna publicering.</p>
+<h2 id="avsnitt-6">6. Kontrollera modellen efter start</h2>
+<p>Öppna appen och välj <strong>Beräkna</strong> i vänstermenyn. Kontrollera att den visar modellversion <strong>10.4</strong>. Klicka sedan på <strong>Återställ standardvärden</strong> under <strong>Öppna eller återställ scenario</strong>.</p>
+<div class="table-scroll"><table><thead><tr><th>Kontrollvärde för standardscenariot</th><th>Förväntat värde</th></tr></thead><tbody>
+<tr><td>Projekttyp</td><td>Nybeskogning</td></tr>
+<tr><td>Trädslag och H100</td><td>Gran, 24 m</td></tr>
+<tr><td>Skötsel</td><td>Fri utveckling utan avverkning</td></tr>
+<tr><td>Mark och referens</td><td>Åkermark; fortsatt nuvarande markanvändning</td></tr>
+<tr><td>Areal och period</td><td>1 ha; 200 år</td></tr>
+<tr><td>Systemgräns</td><td>Ekosystem</td></tr>
+<tr><td>Beräknad bonitet</td><td>6,9 m³sk/ha,år</td></tr>
+<tr><td>Projektets förändring efter 200 år</td><td>cirka 1 121,75 tCO₂/ha</td></tr>
+<tr><td>Referensens förändring efter 200 år</td><td>cirka −36,67 tCO₂/ha</td></tr>
+<tr><td>Netto efter 200 år</td><td>cirka 1 158,42 tCO₂/ha</td></tr>
+</tbody></table></div>
+<p>Resultatkorten avrundar till heltal. Netto bör alltså visas som <strong>1 158</strong>. De oavrundade resultaten finns i CSV- och JSON-exporterna.</p>
+<p>Gör därefter dessa praktiska kontroller:</p>
+<ol start="1">
+<li>Ändra arealen till <strong>2 ha</strong>. Netto per hektar ska vara oförändrat och totalt netto ska bli cirka <strong>2 316,83 tCO₂</strong>, avrundat <strong>2 317</strong>.</li>
+<li>Välj <strong>Jämför skötselmetoder</strong> och klicka på <strong>Beräkna jämförelsen</strong>.</li>
+<li>Välj <strong>Referenskontroller</strong> och klicka på <strong>Kör referenskontroller</strong>. Kontrollera att 40 utfall redovisas. En beräknad kontroll kan visa en avvikelse mot en studie; det är en del av modellens redovisning.</li>
+<li>Välj <strong>Original webbmodell</strong>. Kontrollera att det tidigare gränssnittet laddas och att du kan ändra ett scenario där.</li>
+<li>Hämta ett scenario som JSON och läs tillbaka det i Streamlit-vyn.</li>
+</ol>
+<p>Den kompletta verifieringsredovisningen finns i <code>VERIFIERING.md</code>.</p>
+<h2 id="avsnitt-7">7. Dela webbadressen</h2>
+<p>För att alla med länken ska kunna öppna modellen behöver Streamlit-appen vara offentlig. Öppna appens <strong>Settings → Sharing</strong> och kontrollera inställningen under <strong>Who can view this app</strong>. Offentlig åtkomst anges som <strong>This app is public and searchable</strong>. Du kan sedan kopiera adressen via <strong>Share → Copy link</strong> [5].</p>
+<p>Prova länken i ett privat webbläsarfönster där du inte är inloggad på GitHub eller Streamlit. Om modellen går att använda där är åtkomsten kontrollerad. Offentlig betyder att fler än den avsedda mottagargruppen kan hitta appen.</p>
+<p>Du har därefter två separata publiceringar om den tidigare Netlify-adressen också finns kvar: en på Netlify och en på Streamlit. Ändringar i detta GitHub-projekt förs automatiskt vidare till den kopplade Streamlit-appen. En Netlify-publicering uppdateras när den har en motsvarande koppling till sina egna publiceringsfiler.</p>
+<h2 id="avsnitt-8">8. Om du vill ha privat kod och offentlig app</h2>
+<p>Du kan använda ett privat GitHub-projekt och ändå göra själva Streamlit-appen offentlig. Då behöver Streamlit få åtkomst till det privata projektet under <strong>Settings → Linked accounts → Source control</strong>. Följ kopplingsstegen där [3].</p>
+<p>Appen blir normalt privat från början om källprojektet är privat. Ändra sedan appens delning enligt avsnitt 7 [5]. Besökare kan använda modellen utan att GitHub-projektet blir offentligt. Modellen har samtidigt en nedladdningsbar webbversion, vars beräkningskod levereras till besökarens webbläsare.</p>
+<h2 id="avsnitt-9">9. Uppdatera modellen senare</h2>
+<p>Streamlit följer den gren som valdes vid publiceringen [6].</p>
+<ol start="1">
+<li>Öppna ditt GitHub-projekt och kontrollera att grenen <strong>main</strong> är vald.</li>
+<li>För en liten textändring: öppna filen, klicka på pennsymbolen, ändra och spara med <strong>Commit changes</strong>.</li>
+<li>För en ny modellleverans: packa upp det nya paketet och välj <strong>Add file → Upload files</strong>. Ladda upp de uppdaterade filerna på samma platser som tidigare.</li>
+<li>Spara med ett tydligt commit-meddelande, exempelvis <code>Uppdatera app och modell till nästa verifierade version</code>.</li>
+<li>Öppna Streamlit-appen och kontrollera versionen och ett känt scenario.</li>
+</ol>
+<p>Streamlit hämtar sparade ändringar automatiskt. Beroendeändringar kan ta längre tid än rena text- och kodändringar. Om appen fastnar, använd <strong>Reboot app</strong> i apphanteringen och läs loggen.</p>
+<p>Om du arbetar i VS Code är motsvarigheten att spara, göra en commit och sedan <strong>Push/Sync Changes</strong> till GitHub. En lokal sparning i VS Code räcker inte för att uppdatera den publicerade appen.</p>
+<p>Motorfilen, webbfilsversionen, indataschemat och standardscenariot ska hållas samstämmiga vid framtida modelluppdateringar. Filen <code>original_hashes.json</code> och referensbaslinjen ska bara bytas efter en avsiktlig, verifierad ny modellversion. Enbart ändringar i Streamlit-gränssnittet kräver ingen ny vetenskaplig modellversion.</p>
+<h2 id="avsnitt-10">10. Vanliga problem</h2>
+<div class="table-scroll"><table><thead><tr><th>Vad du ser</th><th>Vad du gör</th></tr></thead><tbody>
+<tr><td><code>streamlit_app.py</code> hittas inte</td><td>Kontrollera att filen ligger direkt i GitHub-projektets rot och att Main file path är exakt <code>streamlit_app.py</code>.</td></tr>
+<tr><td>Bara en ZIP-fil syns i GitHub</td><td>Packa upp ZIP-filen lokalt och ladda upp innehållet.</td></tr>
+<tr><td>Projektet saknas i Streamlit</td><td>Kontrollera valt GitHub-konto, kopplingens behörighet och eventuell organisationsåtkomst. Klistra vid behov in länken till startfilen.</td></tr>
+<tr><td><code>ModuleNotFoundError</code></td><td>Kontrollera att <code>requirements.txt</code> finns i roten och att alla paket kunde installeras. Läs installationsloggen.</td></tr>
+<tr><td>Node.js saknas eller har fel version</td><td>Kontrollera att raden <code>nodejs-wheel==24.19.0</code> finns i <code>requirements.txt</code>. Starta om appen efter att installationen är klar.</td></tr>
+<tr><td>Appen startar men visar inga resultat</td><td>Öppna loggen i apphanteringen. Prova även vyn Original webbmodell för att skilja motorstart från webbgränssnitt.</td></tr>
+<tr><td>Resultaten skiljer sig mellan två vyer</td><td>Spara scenariot i den ena vyn och läs in samma JSON i den andra. Kontrollera särskilt referens, systemgräns, ålder, H100/bonitet och markkol. Vyernas indata ändras separat.</td></tr>
+<tr><td>Alla fem känslighetsutfall är lika</td><td>Variationerna gäller främst kontinuitetsskogsbruk. Om det saknas i scenariot kan utfallet bli lika.</td></tr>
+<tr><td>Ändringen syns inte efter uppladdning</td><td>Kontrollera att du sparat en commit på rätt gren och vänta tills Streamlit har hämtat ändringen. Ladda om sidan.</td></tr>
+<tr><td>Ett sparat scenario är borta efter omstart</td><td>Appen har ingen projektdatabas. Hämta scenario-JSON till din dator och läs tillbaka filen.</td></tr>
+</tbody></table></div>
+<h2 id="avsnitt-11">11. Förvaltning och tekniska detaljer</h2>
+<p>Den nya Streamlit-vyn kör beräkningarna på servern genom originalets Pythonanrop till JavaScript-motorn. Vyn Original webbmodell kör sin beräkning i besökarens webbläsare. Samma antaganden och modellmotor används.</p>
+<p>JSON-filer kan flyttas mellan vyerna. De två gränssnitten delar inte ett automatiskt synkroniserat scenario. CSV-filerna är semikolonseparerade och UTF-8-kodade med BOM, vilket underlättar öppning i svensk Excel. Om Excel inte delar upp kolumnerna, välj <strong>Data → Från text/CSV</strong>, avgränsare <strong>semikolon</strong> och UTF-8.</p>
+<p>Känslighetsanalys och källredovisning har samma vetenskapliga begränsningar som version 10.4. Denna leverans innehåller ingen ny kalibrering eller granskning av skogsreferenserna.</p>
+<p>Den automatiska kontrollen i GitHub visas under fliken <strong>Actions</strong> när <code>.github/workflows/kontroll.yml</code> finns på plats. Grönt resultat betyder att de definierade kontrollerna passerat. Dessa kontroller jämför även Streamlit-vyns funktion med beräkningsresultaten. De ersätter inte en vetenskaplig validering av modellens antaganden.</p>
+<h2 id="avsnitt-12">Källor för publiceringsförfarandet</h2>
+<p>Kontrollerade 26 oktober 2026. Knapptexter kan ändras när tjänsterna uppdateras.</p>
+<ol start="1">
+<li>GitHub Docs. <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository" target="_blank" rel="noopener">Creating a new repository</a>.</li>
+<li>GitHub Docs. <a href="https://docs.github.com/en/repositories/working-with-files/managing-files/adding-a-file-to-a-repository" target="_blank" rel="noopener">Adding a file to a repository</a>.</li>
+<li>Streamlit Docs. <a href="https://docs.streamlit.io/deploy/streamlit-community-cloud/get-started/connect-your-github-account" target="_blank" rel="noopener">Connect your GitHub account</a>.</li>
+<li>Streamlit Docs. <a href="https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/deploy" target="_blank" rel="noopener">Deploy your app on Community Cloud</a>.</li>
+<li>Streamlit Docs. <a href="https://docs.streamlit.io/deploy/streamlit-community-cloud/share-your-app" target="_blank" rel="noopener">Share your app</a>.</li>
+<li>Streamlit Docs. <a href="https://docs.streamlit.io/deploy/streamlit-community-cloud/manage-your-app/edit-your-app" target="_blank" rel="noopener">Edit your app</a>.</li>
+<li>Streamlit Docs. <a href="https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/app-dependencies" target="_blank" rel="noopener">App dependencies</a>.</li>
+<li>Node.js wheel project. <a href="https://pypi.org/project/nodejs-wheel/" target="_blank" rel="noopener">nodejs-wheel</a>.</li>
+</ol><p class="footer">Paketets apputgåva: 10.4-streamlit.1. Beräkningsmotor: Skogskolmodellen 10.4.</p></main></body></html>
