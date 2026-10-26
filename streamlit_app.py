@@ -14,9 +14,6 @@ import model_adapter as model
 st.set_page_config(page_title="Skogskolmodellen 10.4", page_icon="🌲", layout="wide")
 st.markdown("""<style>
     .block-container {padding-top:2rem; max-width:1500px;}
-    [data-testid="stMetricValue"] {color:#205447;}
-    [data-testid="stSidebar"] {background:#f3f7f4;}
-    h1,h2,h3 {color:#173f35;}
     </style>""", unsafe_allow_html=True)
 
 
@@ -196,7 +193,7 @@ def results_view(inputs: dict, serialized: str) -> None:
                        "Om kontinuitetsskogsbruk saknas kan alla fem utfall vara lika.")
             st.dataframe(pd.DataFrame({"Körning": ["Grundfall", "Variant 1", "Variant 2", "Variant 3", "Variant 4"],
                                       f"Netto vid slutåret ({carbon}/ha)": [v * factor for v in span["runs"]]}),
-                         hide_index=True, use_container_width=True)
+                         hide_index=True, width="stretch")
     with tabs[1]:
         stock = frame.set_index("year")[["projectLiveC", "projectDeadwoodC", "projectHumusC", "projectSocC", "projectHwpC", "projectStructuralC"]]
         stock.columns = ["Levande biomassa", "Död ved", "Humus", "SOC", "Träprodukter", "Inbyggt stomvirke"]
@@ -206,13 +203,13 @@ def results_view(inputs: dict, serialized: str) -> None:
     with tabs[2]:
         interval = st.selectbox("Visa vart", [1, 5, 10, 20, 25, 50], index=2)
         st.dataframe(frame[(frame.year % interval == 0) | (frame.year == inputs["analysisYears"])],
-                     hide_index=True, use_container_width=True)
+                     hide_index=True, width="stretch")
         st.caption("CSV-filen innehåller varje beräkningsår. Alla motorvariabler är per hektar; fälten med C anger ton kol "
                    "och fälten med Co2 anger ton CO₂. Årsvariabler anger mängd per år. Totala arealresultat finns i JSON-summeringen.")
     with tabs[3]:
         sources = model.original.scenario_sources(result)
         table = pd.DataFrame(sources).rename(columns={"source": "Källa", "role": "Roll", "reason": "Tillämpning", "url": "Länk"})
-        st.dataframe(table, hide_index=True, use_container_width=True,
+        st.dataframe(table, hide_index=True, width="stretch",
                      column_config={"Länk": st.column_config.LinkColumn("Länk")})
         st.info("Källornas roller beskriver antaganden och kalibrering. Modellen gör ingen statistisk viktning av varje studie till ditt scenario.")
         with st.expander("Visa alla indata som motorn använde"):
@@ -237,7 +234,7 @@ def comparison_view(serialized: str) -> None:
     table = [{"Skötselmetod": v["label"], "Netto 50 år (tCO₂/ha)": v["netAt50"],
               "Netto 100 år (tCO₂/ha)": v["netAt100"], "Netto slutår (tCO₂/ha)": v["netAtEnd"],
               "Medeluttag (m³sk/ha,år)": v["meanHarvestM3"]} for v in values]
-    st.dataframe(pd.DataFrame(table), hide_index=True, use_container_width=True)
+    st.dataframe(pd.DataFrame(table), hide_index=True, width="stretch")
     st.download_button("Hämta jämförelse (CSV)", model.csv_bytes(table), "skogskol_jamforelse.csv", "text/csv")
 
 
@@ -257,7 +254,7 @@ def references_view() -> None:
     rows = [{key: v.get(key) for key in fields} for v in values]
     view = pd.DataFrame(rows)
     view["source"] = view["source"].map(str)
-    st.dataframe(view, hide_index=True, use_container_width=True,
+    st.dataframe(view, hide_index=True, width="stretch",
                  column_config={"href": st.column_config.LinkColumn("Källänk")})
     st.caption("low–high är fem styrda känslighetsfall. Tecken i källan är kvalitativa; inga numeriska källvärden har lagts till för dem.")
     st.download_button("Hämta referenskontroller (CSV)", model.csv_bytes(rows), "referenskontroller_40.csv", "text/csv")
@@ -282,7 +279,7 @@ def main() -> None:
     if "draft" not in st.session_state:
         set_draft(model.DEFAULTS)
     st.title("Skogskolmodellen")
-    st.caption("Modell 10.4 · Streamlit-utgåva 1 · Jämför skogens och träprodukternas beräknade klimateffekter")
+    st.caption("Modell 10.4 · Streamlit-utgåva 2 · Jämför skogens och träprodukternas beräknade klimateffekter")
     with st.sidebar:
         st.markdown("### Skogskolmodellen 10.4")
         page = st.radio("Visa", ["Beräkna", "Jämför skötselmetoder", "Referenskontroller", "Original webbmodell", "Publicera och använd"])

@@ -16,7 +16,7 @@ from typing import Any
 import Skogskolmodellen_v10_4 as original
 
 BASE = Path(__file__).resolve().parent
-APP_VERSION = "10.4-streamlit.1"
+APP_VERSION = "10.4-streamlit.2"
 ENGINE_HASH = hashlib.sha256((original._JS_MODEL + original._JS_STUDIES +
                               original._JS_CONTROLS).encode("utf-8")).hexdigest()
 SCHEMA = json.loads((BASE / "input_schema.json").read_text(encoding="utf-8"))
